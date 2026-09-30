@@ -1,0 +1,14 @@
+{
+  "geode": "5.10.1",
+  "gd": {
+    "android": "2.2081"
+  },
+  "id": "zaid.fps-unlocker",
+  "name": "FPS Unlocker",
+  "version": "v0.1.0",
+  "developer": "Zaid",
+  "description": "Tests Geometry Dash's internal frame interval.",
+  "tags": [
+    "performance"
+  ]
+}
