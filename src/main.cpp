@@ -11,10 +11,10 @@ class $modify(FPSUnlockerPlayLayer, PlayLayer) {
         auto manager = GameManager::get();
 
         // Request 300 FPS from Geometry Dash's own FPS system.
-        manager->m_customFPSTarget = 300.f;
+        manager->m_customFPSTarget = 1000.f;
         manager->updateCustomFPS();
 
-        log::info("FPS Unlocker: requested 300 FPS");
+        log::info("FPS Unlocker: requested 1000 FPS");
 
         return true;
     }
