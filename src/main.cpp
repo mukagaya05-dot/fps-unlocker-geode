@@ -5,6 +5,9 @@ using namespace geode::prelude;
 
 class $modify(FPSUnlockerDirector, CCDirector) {
     void setAnimationInterval(double interval) {
+        log::info("Original animation interval: {}", interval);
+
+        // Force a 300 FPS target.
         CCDirector::setAnimationInterval(1.0 / 300.0);
     }
 };
