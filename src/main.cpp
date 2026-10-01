@@ -1,31 +1,26 @@
 #include <Geode/Geode.hpp>
-#include <Geode/modify/PlayLayer.hpp>
+#include <Geode/modify/CCDisplayLinkDirector.hpp>
 
 using namespace geode::prelude;
 
-class $modify(FPSUnlockerPlayLayer, PlayLayer) {
-    bool init(GJGameLevel* level, bool useReplay, bool dontCreateObjects) {
-        if (!PlayLayer::init(level, useReplay, dontCreateObjects))
-            return false;
+class $modify(FPSLoopDiagnostic, CCDisplayLinkDirector) {
+    void mainLoop() {
+        static uint64_t frames = 0;
+        static auto start = std::chrono::steady_clock::now();
 
-        auto manager = GameManager::get();
+        frames++;
 
-        // Request 300 FPS from Geometry Dash's own FPS system.
-        manager->m_customFPSTarget = 1000.f;
-        manager->updateCustomFPS();
+        auto now = std::chrono::steady_clock::now();
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
+            now - start
+        ).count();
 
-        log::info("FPS Unlocker: requested 1000 FPS");
+        if (elapsed >= 1000) {
+            log::info("MAINLOOP CALLS: {}", frames);
+            frames = 0;
+            start = now;
+        }
 
-        return true;
-    }
-
-    void onQuit() {
-        auto manager = GameManager::get();
-
-        // Restore the normal 120 FPS target when leaving a level.
-        manager->m_customFPSTarget = 120.f;
-        manager->updateCustomFPS();
-
-        PlayLayer::onQuit();
+        CCDisplayLinkDirector::mainLoop();
     }
 };
